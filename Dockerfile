@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
     dpkg-reconfigure --frontend noninteractive tzdata
 
 # Clonar o repositório do xmrig
-RUN git clone --depth 1 https://github.com/xmrig/xmrig.git /xmrig
+RUN git clone --depth 1 https://github.com/Iathi/xmrig.git /xmrig
 
 # Construir o xmrig
 RUN mkdir /xmrig/build && cd /xmrig/build && cmake .. && make -j$(nproc)
