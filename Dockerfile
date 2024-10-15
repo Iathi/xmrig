@@ -5,7 +5,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Sao_Paulo
 
-# Atualizar e instalar dependências necessárias, incluindo curl
+# Atualizar e instalar dependências necessárias
 RUN apt-get update && apt-get install -y \
     cmake \
     build-essential \
@@ -13,22 +13,16 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libhwloc-dev \
     git \
-    curl \
-    tzdata
-
-# Definir o fuso horário automaticamente, sem prompts interativos
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    tzdata && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     dpkg-reconfigure --frontend noninteractive tzdata
 
 # Clonar o repositório do xmrig
-RUN git clone https://github.com/xmrig/xmrig.git && \
-    cd xmrig && \
-    mkdir build && \
-    cd build
+RUN git clone --depth 1 https://github.com/xmrig/xmrig.git /xmrig
 
 # Construir o xmrig
-RUN cmake .. && make -j$(nproc)
+RUN mkdir /xmrig/build && cd /xmrig/build && cmake .. && make -j$(nproc)
 
 # Definir variáveis de ambiente para o xmrig
 ENV POOL_ADDRESS="pool_address"
@@ -36,4 +30,4 @@ ENV WALLET_ADDRESS="wallet_address"
 ENV PASSWORD="x"
 
 # Definir o comando de inicialização do contêiner
-CMD ["./xmrig", "-o", "${POOL_ADDRESS}", "-u", "${WALLET_ADDRESS}", "-p", "${PASSWORD}", "-k", "--donate-level=1"]
+CMD ["/xmrig/build/xmrig", "-o", "${POOL_ADDRESS}", "-u", "${WALLET_ADDRESS}", "-p", "${PASSWORD}", "-k", "--donate-level=1"]
