@@ -58,25 +58,25 @@
     "donate-level": 1,
     "donate-over-proxy": 1,
     "log-file": null,
-    "pools": [
-        {
-            "algo": null,
-            "coin": null,
-            "url": "pool.minexmr.com:4444",
-            "user": "43Z7htLsrbxBAkZPeSCcdVJALF8JsiqRa9Kc9vVP4MYxSKrBqPbokMGKJXFgakK1NoPKGKLfgrCgEFA9HKxh9BmY16GLviW",
-            "pass": "x",
-            "rig-id": null,
-            "nicehash": false,
-            "keepalive": false,
-            "enabled": true,
-            "tls": false,
-            "tls-fingerprint": null,
-            "daemon": false,
-            "socks5": null,
-            "self-select": null,
-            "submit-to-origin": false
-        }
-    ],
+"pools": [
+    {
+        "algo": null,                        // Pode ser definido como "rx/0" para Monero
+        "coin": null,                        // Pode ser definido como "monero"
+        "url": "pool.minexmr.com:4444",      // Endereço correto da pool
+        "user": "43Z7htLsrbxBAkZPeSCcdVJALF8JsiqRa9Kc9vVP4MYxSKrBqPbokMGKJXFgakK1NoPKGKLfgrCgEFA9HKxh9BmY16GLviW",  // Endereço da carteira Monero
+        "pass": "x",                         // Pode deixar como está (opcional para o nome do worker)
+        "rig-id": null,                      // Identificador do rig (opcional)
+        "nicehash": false,                   // Falso, pois não é uma pool NiceHash
+        "keepalive": false,                  // Idealmente deve ser **true** para manter a conexão ativa
+        "enabled": true,                     // Está habilitado corretamente
+        "tls": false,                        // Pode ser deixado como falso se a pool não exigir TLS
+        "tls-fingerprint": null,
+        "daemon": false,
+        "socks5": null,
+        "self-select": null,
+        "submit-to-origin": false
+    }
+        ]
     "print-time": 60,
     "health-print-time": 60,
     "dmi": true,
