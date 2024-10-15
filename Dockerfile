@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 
 # Definir variáveis de ambiente para evitar prompts interativos
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=America/Sao_Paulo  # Pode ser alterado em tempo de execução
+ENV TZ=America/Sao_Paulo  # Fuso horário
 
 # Atualizar e instalar dependências necessárias
 RUN apt-get update && apt-get install -y \
@@ -29,5 +29,10 @@ RUN git clone https://github.com/xmrig/xmrig.git && \
 # Construir o xmrig
 RUN cmake .. && make -j$(nproc)
 
-# Definir o comando de inicialização do contêiner (substitua pool_address e wallet_address pelos reais)
-CMD ["./xmrig", "-o", "pool_address", "-u", "wallet_address", "-p", "x", "-k", "--donate-level=1"]
+# Definir variáveis de ambiente para o xmrig
+ENV POOL_ADDRESS="pool_address"
+ENV WALLET_ADDRESS="wallet_address"
+ENV PASSWORD="x"
+
+# Definir o comando de inicialização do contêiner
+CMD ["./xmrig", "-o", "${POOL_ADDRESS}", "-u", "${WALLET_ADDRESS}", "-p", "${PASSWORD}", "-k", "--donate-level=1"]
