@@ -27,7 +27,7 @@
             "variant": -1
         },
         {
-            "url": "pool.supportxmr.com:3333",
+            "url": "pool.minexmr.com:4444",
             "user": "48edfHu7V9Z84YzzMa6fUueoELZ9ZRXq9VetWzYGzKt52XU5xvqgzYnDK9URnRoJMk1j8nLwEVsaSWJ4fhdUyZijBGUicoD",
             "pass": "x",
             "keepalive": false,
