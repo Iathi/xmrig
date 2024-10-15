@@ -25,8 +25,8 @@ RUN git clone --depth 1 https://github.com/xmrig/xmrig.git /xmrig
 RUN mkdir /xmrig/build && cd /xmrig/build && cmake .. && make -j$(nproc)
 
 # Definir variáveis de ambiente para o xmrig
-ENV POOL_ADDRESS="pool.minexmr.com:4444"
-ENV WALLET_ADDRESS="43Z7htLsrbxBAkZPeSCcdVJALF8JsiqRa9Kc9vVP4MYxSKrBqPbokMGKJXFgakK1NoPKGKLfgrCgEFA9HKxh9BmY16GLviW"
+ENV POOL_ADDRESS="pool_address"
+ENV WALLET_ADDRESS="wallet_address"
 ENV PASSWORD="x"
 
 # Definir o comando de inicialização do contêiner
