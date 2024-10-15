@@ -1,22 +1,31 @@
+# Usar a imagem base Ubuntu 20.04
 FROM ubuntu:20.04
 
-# Install necessary dependencies
+# Definir variáveis de ambiente para evitar prompts interativos
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Atualizar e instalar dependências necessárias
 RUN apt-get update && apt-get install -y \
     cmake \
     build-essential \
     libuv1-dev \
     libssl-dev \
     libhwloc-dev \
-    git
+    git \
+    tzdata
 
-# Clone the XMRig repository
-RUN git clone https://github.com/xmrig/xmrig.git /xmrig
+# Definir fuso horário automaticamente (ajuste conforme necessário)
+RUN ln -fs /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime && \
+    dpkg-reconfigure --frontend noninteractive tzdata
 
-# Create a build directory and navigate into it
-WORKDIR /xmrig/build
+# Clonar o repositório do xmrig
+RUN git clone https://github.com/xmrig/xmrig.git && \
+    cd xmrig && \
+    mkdir build && \
+    cd build
 
-# Run cmake and make
+# Construir o xmrig
 RUN cmake .. && make -j$(nproc)
 
-# Command to run XMRig with your pool and wallet details
+# Definir o comando de inicialização do contêiner
 CMD ["./xmrig", "-o", "pool_address", "-u", "wallet_address", "-p", "x", "-k", "--donate-level=1"]
