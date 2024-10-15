@@ -3,9 +3,8 @@ FROM ubuntu:20.04
 
 # Definir variáveis de ambiente para evitar prompts interativos
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=America/Sao_Paulo  # Fuso horário
 
-# Atualizar e instalar dependências necessárias
+# Atualizar e instalar dependências necessárias, incluindo curl
 RUN apt-get update && apt-get install -y \
     cmake \
     build-essential \
@@ -13,10 +12,12 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libhwloc-dev \
     git \
+    curl \ # Adiciona curl para fazer requisições HTTP
     tzdata
 
-# Definir o fuso horário automaticamente e aceitar as configurações
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+# Detectar o fuso horário automaticamente usando a API ipinfo.io
+RUN TZ=$(curl -s https://ipinfo.io/timezone) && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     dpkg-reconfigure --frontend noninteractive tzdata
 
